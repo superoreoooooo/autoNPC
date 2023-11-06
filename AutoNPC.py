@@ -17,7 +17,8 @@ class AutoNPC() :
         self.npc = {}
         self.apikey = apikey
         self.template = """
-                너는 게임 NPC를 생성하는데 도움을 주는 AI야. 내가 게임의 장르와 게임의 분위기, 게임 배경의 시대, 게임 NPC의 직업, 게임 NPC의 종족, 게임 NPC의 우호도를 말해 주고, 이에 따른 게임 NPC를 생성해 달라고 말하면 내가 말해준 정보에 따라서 게임 NPC의 이름과 게임 NPC의 스토리, 그리고 게임 NPC의 퀘스트를 생성해 줘. 
+                너는 게임 NPC를 생성하는데 도움을 주는 AI야. 내가 게임의 장르와 게임의 분위기, 게임 배경의 시대, 게임 NPC의 직업, 게임 NPC의 종족, 게임 NPC의 유저에 대한 우호도를 말해 주고, 이에 따른 게임 NPC를 생성해 달라고 말하면 내가 말해준 정보에 따라서 게임 NPC의 이름과 게임 NPC의 스토리, 그리고 게임 NPC의 퀘스트를 생성해 줘. 
+                게임 NPC의 이름은 띄어쓰기를 포함해서 10글자가 넘지 않도록 해줘.
                 퀘스트에는 퀘스트의 이름, 퀘스트의 스토리, 게임 NPC의 요소들과 관련된 물품을 모아오기 또는 게임 NPC의 요소들과 관련된 몬스터 등의 사냥을 통한 퀘스트의 목표, 게임 NPC의 요소들과 관련된 보상도 작성해 줘. 퀘스트의 목표는 정확한 개수가 있어야 하고, 퀘스트의 보상도 정확한 개수를 작성해야 해. 그리고 퀘스트의 보상에는 NPC의 장르와 관련된 보상으로 줄 만한 아이템과, 경험치, NPC의 장르와 관련된 재화또한 작성해야 돼. 예상되는 퀘스트의 난이도에 따른 적당한 양의 경험치와 보상, 재화를 작성해 줘.
                 퀘스트는 4가지 생성해 줘야 하고, 각각의 퀘스트에 들어가는 목표는 1개여야 해.
                 퀘스트의 목표는 몬스터 10마리 처치 / 나무 10개 수집 등의 형식으로 맞춰줘.
@@ -36,7 +37,7 @@ class AutoNPC() :
         
         self.system_template = SystemMessagePromptTemplate.from_template(self.template)
 
-        self.human_template = "게임의 장르는 {genre}, 게임의 분위기는 {ambient}, 게임 NPC의 직업은 {job}, 게임 NPC의 종족은 {brood}고, 이에 따른 게임 NPC의 이름과 게임 NPC의 스토리, 그리고 게임 NPC의 퀘스트 4개를 {language}로 생성해 줘."
+        self.human_template = "게임의 장르는 {genre}, 게임의 분위기는 {ambient}, 게임의 시대는 {era}, 게임 NPC의 직업은 {job}, 게임 NPC의 종족은 {brood}, 게임 NPC의 우호도는 {bias}이고, 이에 따른 게임 NPC의 이름과 게임 NPC의 스토리, 그리고 게임 NPC의 퀘스트 4개를 {language}로 생성해 줘. 모든 문자가 {language}일 필요는 없지만 되도록 {language}로 생성해 줘."
         self.human_message_prompt = HumanMessagePromptTemplate.from_template(self.human_template)
 
         self.chat_prompt = ChatPromptTemplate.from_messages([self.system_template, self.human_message_prompt])
